@@ -44,5 +44,9 @@ public class AcademicView {
         }
     }
 
-    
+    public void displayStudentBest(List<Enrollment> bestStudents) {
+        for (Enrollment bestStudent : bestStudents){
+            System.out.println(bestStudent.getStudent_id() + "|" + bestStudent.getGrade());
+        }
+    }
 }

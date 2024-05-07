@@ -17,7 +17,7 @@ public class AcademicController {
     private static ArrayList<Course> courses = new ArrayList<>();
     private static ArrayList<CourseOpening> courseOpenings = new ArrayList<>();
     private static ArrayList<Enrollment> enrollments = new ArrayList<>();
-    private static ArrayList<Student> best_Student = new ArrayList<>();
+    private static ArrayList<Enrollment> bestStudents = new ArrayList<>();
 
     
     public static void addLecturer(String id, String name, String initial, String email, String studyProgram) {
@@ -164,15 +164,24 @@ public class AcademicController {
         }
     }
 
-    // public static void findBestStudent(String year, String semester){
-    //     Collections.sort(students,new Comparator<Student>() {
-    //         public int compare(Student s1, Student s2){
-    //             //String id1 = Integer.parseInt(s1.getId());
-
-    //         }
-    //     }
-    //     );
-    // }
+    public static void findBestStudent(String year, String semester){
+        Enrollment best_std = null;
+        for (Enrollment enrollment : enrollments) {
+            if(enrollment.getYear().equals(year) && enrollment.getSemester().equals(semester)) {
+                if (best_std == null || Double.parseDouble(enrollment.getGrade()) > Double.parseDouble(best_std.getGrade()) || 
+                    (Double.parseDouble(enrollment.getGrade()) == Double.parseDouble(best_std.getGrade()) && Integer.parseInt(enrollment.getStudent_id()) % 2 == 0)) {
+                    best_std = enrollment;
+                }
+            }
+        }
+        if (best_std != null) {
+            addBestStudent(best_std);
+        }
+    }
+    
+    public static void addBestStudent(Enrollment bestStudent){
+        bestStudents.add(bestStudent);
+    }
 
     public static void addStudentDetail(String studentId) {
         double totalCredit = 0;
@@ -277,6 +286,10 @@ public class AcademicController {
 
     public static ArrayList<Enrollment> getEnrollments() {
         return enrollments;
+    }
+
+    public static ArrayList<Enrollment> getBestStudents() {
+        return bestStudents;
     }
 
 }
