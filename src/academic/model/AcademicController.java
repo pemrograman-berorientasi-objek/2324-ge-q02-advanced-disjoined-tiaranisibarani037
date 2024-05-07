@@ -17,7 +17,7 @@ public class AcademicController {
     private static ArrayList<Course> courses = new ArrayList<>();
     private static ArrayList<CourseOpening> courseOpenings = new ArrayList<>();
     private static ArrayList<Enrollment> enrollments = new ArrayList<>();
-    private static ArrayList<Enrollment> bestStudents = new ArrayList<>();
+    private static ArrayList<String> bestStudents = new ArrayList<>();
 
     
     public static void addLecturer(String id, String name, String initial, String email, String studyProgram) {
@@ -61,6 +61,7 @@ public class AcademicController {
             }
         }
     
+        
         // Mencari detail mata kuliah yang sesuai
         Course correspondingCourse = null;
         for (Course course : courses) {
@@ -163,39 +164,74 @@ public class AcademicController {
             enrollments.add(enrollment);
         }
     }
-    
-    public static void findBestStudent(String year, String semester){
-        Map<String, Double> gradeMap = new HashMap<>();
-        gradeMap.put("A", 4.0);
-        gradeMap.put("AB", 3.5);
-        gradeMap.put("B", 3.0);
-        // tambahkan semua nilai yang mungkin di sini
-    
-        Enrollment bestStudentOdd = null;
-        Enrollment bestStudentEven = null;
+
+    private static ArrayList<BestStudents> bestStudentsList = new ArrayList<>();
+
+    public static void findBestStudent(String year, String semester) {
+        // Filter enrollments based on the specified year
+        ArrayList<Enrollment> filteredEnrollments = new ArrayList<>();
         for (Enrollment enrollment : enrollments) {
-            if(enrollment.getYear().equals(year)) {
-                Double grade = gradeMap.get(enrollment.getGrade());
-                if (enrollment.getSemester().equals("odd")) {
-                    if (bestStudentOdd == null || grade > gradeMap.get(bestStudentOdd.getGrade()) || 
-                        (grade == gradeMap.get(bestStudentOdd.getGrade()) && Integer.parseInt(enrollment.getStudent_id().replaceAll("\\D+","")) % 2 == 0)) {
-                        bestStudentOdd = enrollment;
-                    }
-                } else if (enrollment.getSemester().equals("even")) {
-                    if (bestStudentEven == null || grade > gradeMap.get(bestStudentEven.getGrade()) || 
-                        (grade == gradeMap.get(bestStudentEven.getGrade()) && Integer.parseInt(enrollment.getStudent_id().replaceAll("\\D+","")) % 2 == 0)) {
-                        bestStudentEven = enrollment;
-                    }
+            if (enrollment.getYear().equals(year)) {
+                filteredEnrollments.add(enrollment);
+            }
+        }
+    
+        // Calculate the best student for odd and even semesters
+        Enrollment bestOdd = null;
+        Enrollment bestEven = null;
+        for (Enrollment enrollment : filteredEnrollments) {
+            if (enrollment.getSemester().equalsIgnoreCase("odd")) {
+                if (bestOdd == null || calculateGradePoints(enrollment.getGrade()) > calculateGradePoints(bestOdd.getGrade())) {
+                    bestOdd = enrollment;
+                }
+            } else {
+                if (bestEven == null || calculateGradePoints(enrollment.getGrade()) > calculateGradePoints(bestEven.getGrade())) {
+                    bestEven = enrollment;
                 }
             }
         }
-        if (bestStudentOdd != null && bestStudentEven != null) {
-            System.out.println(bestStudentOdd.getStudent_id() + "|" + bestStudentOdd.getGrade() + "/" + bestStudentEven.getGrade());
-        }
-    }
     
-    public static void addBestStudent(String Id) {
-        //apa isinya
+        // If bestEven is null or bestOdd has a higher grade, set bestEven to bestOdd
+        if (bestEven == null || (bestOdd != null && calculateGradePoints(bestOdd.getGrade()) > calculateGradePoints(bestEven.getGrade()))) {
+            bestEven = bestOdd;
+        }
+    
+        // Create a new BestStudents object and set the best students
+        BestStudents bestStudents = new BestStudents(year, semester);
+        bestStudents.setBestStudentOdd(bestOdd);
+        bestStudents.setBestStudentEven(bestEven);
+    
+        // Add the best students to the list
+        addBestStudent(bestStudents);
+    }
+
+    public static void addBestStudent(BestStudents bestStudents) {
+        bestStudentsList.add(bestStudents);
+    }
+
+    public static void addBestStudent(String bestStudent) {
+        // String[] tokens = bestStudent.split("/");
+        // String year = tokens[0];
+        // String semester = tokens[1];
+        // String studentIdOdd = tokens[2];
+        // String gradeOdd = tokens[3];
+        // String studentIdEven = tokens[4];
+        // ArrayList<BestStudents> bestStudentsList = new ArrayList<>();
+
+        // String gradeEven = tokens[5];
+
+        // // Create BestStudents objects and set the best students
+        // BestStudents bestStudents = new BestStudents(year, semester);
+        // Enrollment enrollmentOdd = new Enrollment("", studentIdOdd, year, semester, gradeOdd);
+        // Enrollment enrollmentEven = new Enrollment("", studentIdEven, year, semester, gradeEven);
+        // bestStudents.setBestStudentOdd(enrollmentOdd);
+        // bestStudents.setBestStudentEven(enrollmentEven);
+
+        // // Print the added best students
+        // System.out.println(studentIdEven + "|" + gradeOdd + "/" + gradeEven);
+
+        // // Add the best students to the list of best students
+        // bestStudentsList.add(bestStudents);
     }
 
     public static void addStudentDetail(String studentId) {
@@ -303,8 +339,12 @@ public class AcademicController {
         return enrollments;
     }
 
-    public static ArrayList<Enrollment> getBestStudents() {
+    public static ArrayList<String> getBestStudents() {
         return bestStudents;
+    }
+
+    public static BestStudents[] getBestStudentsList() {
+        return bestStudentsList.toArray(new BestStudents[0]);
     }
 
 }

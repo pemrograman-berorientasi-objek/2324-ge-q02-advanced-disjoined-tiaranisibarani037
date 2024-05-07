@@ -43,10 +43,4 @@ public class AcademicView {
             System.out.println(enrollment.getCourse_id() + "|" + enrollment.getStudent_id() + "|" + enrollment.getYear() + "|" + enrollment.getSemester() + "|" + enrollment.getGrade());
         }
     }
-
-    public void displayStudentBest(List<Enrollment> bestStudents) {
-        for (Enrollment bestStudent : bestStudents){
-            System.out.println(bestStudent.getStudent_id() + "|" + "B/A");
-        }
-    }
 }

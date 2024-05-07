@@ -13,6 +13,7 @@ public class Driver1 {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         AcademicView academicView = new AcademicView();
+        String bestStudentsInfo = "";
 
         while (input.hasNextLine()) {
             String str = input.nextLine();
@@ -67,7 +68,9 @@ public class Driver1 {
         academicView.displayCourses(AcademicController.getCourses());
         academicView.displayStudents(AcademicController.getStudents());
         academicView.displayEnrollments(AcademicController.getEnrollments());
-        academicView.displayStudentBest(AcademicController.getBestStudents());
+        for (BestStudents bestStudent : AcademicController.getBestStudentsList()) {
+            System.out.println(bestStudent);
+        }
         
         input.close();
     }

@@ -38,4 +38,13 @@ public class BestStudents {
     public void setBestStudentEven(Enrollment bestStudentEven) {
         this.bestStudentEven = bestStudentEven;
     }
+
+    @Override
+    public String toString() {
+        String bestStudentOddGrade = bestStudentOdd != null ? bestStudentOdd.getGrade() : "N/A";
+        String bestStudentEvenGrade = bestStudentEven != null ? bestStudentEven.getGrade() : "N/A";
+        String bestStudentEvenId = bestStudentEven != null ? bestStudentEven.getStudent_id() : "N/A";
+
+        return bestStudentEvenId + "|" + bestStudentOddGrade + "/" + bestStudentEvenGrade;
+    }
 }
