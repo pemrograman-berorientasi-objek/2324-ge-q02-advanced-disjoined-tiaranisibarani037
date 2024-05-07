@@ -61,6 +61,7 @@ public class AcademicController {
             }
         }
     
+        
         // Mencari detail mata kuliah yang sesuai
         Course correspondingCourse = null;
         for (Course course : courses) {

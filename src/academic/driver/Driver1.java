@@ -68,6 +68,7 @@ public class Driver1 {
         academicView.displayEnrollments(AcademicController.getEnrollments());
         academicView.displayBestStudent(AcademicController.getBestStudentInfo());
         
+        
         input.close();
     }
 }
