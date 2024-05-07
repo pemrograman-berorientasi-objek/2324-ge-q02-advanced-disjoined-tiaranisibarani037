@@ -165,29 +165,39 @@ public class AcademicController {
     }
 
     public static void findBestStudent(String year, String semester){
-    Map<String, Double> gradeMap = new HashMap<>();
-    gradeMap.put("A", 4.0);
-    gradeMap.put("AB", 3.5);
-    gradeMap.put("B", 3.0);
-    // tambahkan semua nilai yang mungkin di sini
-
-    Enrollment best_std = null;
-    for (Enrollment enrollment : enrollments) {
-        if(enrollment.getYear().equals(year) && enrollment.getSemester().equals(semester)) {
-            Double grade = gradeMap.get(enrollment.getGrade());
-            if (best_std == null || grade > gradeMap.get(best_std.getGrade()) || 
-                (grade == gradeMap.get(best_std.getGrade()) && Integer.parseInt(enrollment.getStudent_id().replaceAll("\\D+","")) % 2 == 0)) {
-                best_std = enrollment;
+        Map<String, Double> gradeMap = new HashMap<>();
+        gradeMap.put("A", 4.0);
+        gradeMap.put("AB", 3.5);
+        gradeMap.put("B", 3.0);
+        // tambahkan semua nilai yang mungkin di sini
+    
+        Enrollment bestStudentOdd = null;
+        Enrollment bestStudentEven = null;
+        for (Enrollment enrollment : enrollments) {
+            if(enrollment.getYear().equals(year)) {
+                Double grade = gradeMap.get(enrollment.getGrade());
+                if (enrollment.getSemester().equals("odd")) {
+                    if (bestStudentOdd == null || grade > gradeMap.get(bestStudentOdd.getGrade()) || 
+                        (grade == gradeMap.get(bestStudentOdd.getGrade()) && Integer.parseInt(enrollment.getStudent_id().replaceAll("\\D+","")) % 2 == 0)) {
+                        bestStudentOdd = enrollment;
+                    }
+                } else if (enrollment.getSemester().equals("even")) {
+                    if (bestStudentEven == null || grade > gradeMap.get(bestStudentEven.getGrade()) || 
+                        (grade == gradeMap.get(bestStudentEven.getGrade()) && Integer.parseInt(enrollment.getStudent_id().replaceAll("\\D+","")) % 2 == 0)) {
+                        bestStudentEven = enrollment;
+                    }
+                }
             }
         }
+        if (bestStudentOdd != null && bestStudentEven != null) {
+            addBestStudent(bestStudentOdd, bestStudentEven);
+        }
     }
-    if (best_std != null) {
-        addBestStudent(best_std);
-    }
-}
     
-    public static void addBestStudent(Enrollment bestStudent){
-        bestStudents.add(bestStudent);
+    private static Map<String, Double> gradeMap = new HashMap<>();
+    
+    public static void addBestStudent(Enrollment bestStudentOdd, Enrollment bestStudentEven){
+        System.out.println(bestStudentEven.getStudent_id() + "|" + gradeMap.get(bestStudentOdd.getGrade()) + "/" + gradeMap.get(bestStudentEven.getGrade()));
     }
 
     public static void addStudentDetail(String studentId) {
