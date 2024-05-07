@@ -165,19 +165,26 @@ public class AcademicController {
     }
 
     public static void findBestStudent(String year, String semester){
-        Enrollment best_std = null;
-        for (Enrollment enrollment : enrollments) {
-            if(enrollment.getYear().equals(year) && enrollment.getSemester().equals(semester)) {
-                if (best_std == null || Double.parseDouble(enrollment.getGrade()) > Double.parseDouble(best_std.getGrade()) || 
-                    (Double.parseDouble(enrollment.getGrade()) == Double.parseDouble(best_std.getGrade()) && Integer.parseInt(enrollment.getStudent_id()) % 2 == 0)) {
-                    best_std = enrollment;
-                }
+    Map<String, Double> gradeMap = new HashMap<>();
+    gradeMap.put("A", 4.0);
+    gradeMap.put("AB", 3.5);
+    gradeMap.put("B", 3.0);
+    // tambahkan semua nilai yang mungkin di sini
+
+    Enrollment best_std = null;
+    for (Enrollment enrollment : enrollments) {
+        if(enrollment.getYear().equals(year) && enrollment.getSemester().equals(semester)) {
+            Double grade = gradeMap.get(enrollment.getGrade());
+            if (best_std == null || grade > gradeMap.get(best_std.getGrade()) || 
+                (grade == gradeMap.get(best_std.getGrade()) && Integer.parseInt(enrollment.getStudent_id().replaceAll("\\D+","")) % 2 == 0)) {
+                best_std = enrollment;
             }
         }
-        if (best_std != null) {
-            addBestStudent(best_std);
-        }
     }
+    if (best_std != null) {
+        addBestStudent(best_std);
+    }
+}
     
     public static void addBestStudent(Enrollment bestStudent){
         bestStudents.add(bestStudent);
