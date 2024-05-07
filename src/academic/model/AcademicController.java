@@ -17,7 +17,7 @@ public class AcademicController {
     private static ArrayList<Course> courses = new ArrayList<>();
     private static ArrayList<CourseOpening> courseOpenings = new ArrayList<>();
     private static ArrayList<Enrollment> enrollments = new ArrayList<>();
-    private static ArrayList<Enrollment> bestStudents = new ArrayList<>();
+    private static ArrayList<String> bestStudents = new ArrayList<>();
 
     
     public static void addLecturer(String id, String name, String initial, String email, String studyProgram) {
@@ -163,7 +163,7 @@ public class AcademicController {
             enrollments.add(enrollment);
         }
     }
-
+    
     public static void findBestStudent(String year, String semester){
         Map<String, Double> gradeMap = new HashMap<>();
         gradeMap.put("A", 4.0);
@@ -190,12 +190,13 @@ public class AcademicController {
             }
         }
         if (bestStudentOdd != null && bestStudentEven != null) {
-            System.out.println(bestStudentOdd.getStudent_id() + "|" + bestStudentOdd.getGrade() + "/" + bestStudentEven.getGrade());
+            String bestStudentInfo = bestStudentOdd.getStudent_id() + "|" + bestStudentOdd.getGrade() + "/" + bestStudentEven.getGrade();
+            bestStudents.add(bestStudentInfo);
         }
     }
     
     public static void addBestStudent(String Id) {
-        //System.out.println(bestStudentOdd.getStudent_id() + "|" + bestStudentOdd.getGrade() + "/" + bestStudentEven.getGrade());
+        //apa isinya
     }
 
     public static void addStudentDetail(String studentId) {
@@ -303,8 +304,15 @@ public class AcademicController {
         return enrollments;
     }
 
-    public static ArrayList<Enrollment> getBestStudents() {
+    public static ArrayList<String> getBestStudents() {
         return bestStudents;
+    }
+
+	public static String getBestStudentInfo() {
+        if (!bestStudents.isEmpty()) {
+            return bestStudents.get(bestStudents.size() - 1);
+        }
+        return null;
     }
 
 }

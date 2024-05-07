@@ -59,7 +59,6 @@ public class Driver1 {
                         System.out.println("Invalid command.");
                         break;
                 }
-
             }
         }
 
@@ -67,8 +66,8 @@ public class Driver1 {
         academicView.displayCourses(AcademicController.getCourses());
         academicView.displayStudents(AcademicController.getStudents());
         academicView.displayEnrollments(AcademicController.getEnrollments());
-        academicView.displayStudentBest(AcademicController.getBestStudents());
-
+        academicView.displayBestStudent(AcademicController.getBestStudentInfo());
+        
         input.close();
     }
 }

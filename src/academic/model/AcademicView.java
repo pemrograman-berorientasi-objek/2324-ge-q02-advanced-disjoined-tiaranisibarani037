@@ -44,9 +44,8 @@ public class AcademicView {
         }
     }
 
-    public void displayStudentBest(List<Enrollment> bestStudents) {
-        for (Enrollment bestStudent : bestStudents){
-            System.out.println(bestStudent.getStudent_id() + "|" + "B/A");
-        }
+    public void displayBestStudent(String bestStudentInfo) {
+        System.out.println(bestStudentInfo);
+        System.out.println(bestStudentInfo);
     }
 }
