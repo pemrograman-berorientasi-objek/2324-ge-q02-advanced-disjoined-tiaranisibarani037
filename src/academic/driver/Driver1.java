@@ -52,9 +52,9 @@ public class Driver1 {
                     case "find-the-best-student":
                         AcademicController.findBestStudent(tokens[1], tokens[2]);
                         break;
-                    // case "add-best-student":
-                    //     AcademicController.addBestStudent();
-                    //     break;
+                    case "add-best-student":
+                        AcademicController.addBestStudent(tokens[1]);
+                        break;
                     default:
                         System.out.println("Invalid command.");
                         break;

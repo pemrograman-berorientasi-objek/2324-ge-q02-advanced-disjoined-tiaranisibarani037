@@ -190,14 +190,12 @@ public class AcademicController {
             }
         }
         if (bestStudentOdd != null && bestStudentEven != null) {
-            addBestStudent(bestStudentOdd, bestStudentEven);
+            System.out.println(bestStudentOdd.getStudent_id() + "|" + bestStudentOdd.getGrade() + "/" + bestStudentEven.getGrade());
         }
     }
     
-    private static Map<String, Double> gradeMap = new HashMap<>();
-    
-    public static void addBestStudent(Enrollment bestStudentOdd, Enrollment bestStudentEven){
-        System.out.println(bestStudentEven.getStudent_id() + "|" + gradeMap.get(bestStudentOdd.getGrade()) + "/" + gradeMap.get(bestStudentEven.getGrade()));
+    public static void addBestStudent(String Id) {
+        //System.out.println(bestStudentOdd.getStudent_id() + "|" + bestStudentOdd.getGrade() + "/" + bestStudentEven.getGrade());
     }
 
     public static void addStudentDetail(String studentId) {
