@@ -2,7 +2,9 @@ package academic.model;
 
 /**
  * @author 12S22037 Tiarani Sibarani
+ * @author 12S22003 Yohana Siahaan
  */
+
 public class Student extends Entity {
     private String year;
     private String studyProgram;

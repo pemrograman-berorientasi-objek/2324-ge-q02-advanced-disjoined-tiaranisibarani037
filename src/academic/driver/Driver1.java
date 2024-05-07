@@ -2,6 +2,7 @@ package academic.driver;
 
 /**
  * @author 12S22037 Tiarani Sibarani
+ * @author 12S22003 Yohana Siahaan
  */
 import java.util.Scanner;
 
@@ -13,7 +14,6 @@ public class Driver1 {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         AcademicView academicView = new AcademicView();
-        String bestStudentsInfo = "";
 
         while (input.hasNextLine()) {
             String str = input.nextLine();
