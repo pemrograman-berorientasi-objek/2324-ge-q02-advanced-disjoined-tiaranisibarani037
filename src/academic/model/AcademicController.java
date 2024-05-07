@@ -164,15 +164,15 @@ public class AcademicController {
         }
     }
 
-    public static void findBestStudent(String year, String semester){
-        Collections.sort(students,new Comparator<Student>() {
-            public int compare(Student s1, Student s2){
-                String id1 = Integer.parseInt(s1.getId());
+    // public static void findBestStudent(String year, String semester){
+    //     Collections.sort(students,new Comparator<Student>() {
+    //         public int compare(Student s1, Student s2){
+    //             //String id1 = Integer.parseInt(s1.getId());
 
-            }
-        }
-        );
-    }
+    //         }
+    //     }
+    //     );
+    // }
 
     public static void addStudentDetail(String studentId) {
         double totalCredit = 0;
