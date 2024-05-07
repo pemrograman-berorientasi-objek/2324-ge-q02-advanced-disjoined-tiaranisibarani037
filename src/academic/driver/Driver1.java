@@ -6,6 +6,7 @@ package academic.driver;
 import java.util.Scanner;
 
 import academic.model.AcademicView;
+import academic.model.BestStudents;
 import academic.model.AcademicController;
 
 public class Driver1 {
@@ -66,8 +67,7 @@ public class Driver1 {
         academicView.displayCourses(AcademicController.getCourses());
         academicView.displayStudents(AcademicController.getStudents());
         academicView.displayEnrollments(AcademicController.getEnrollments());
-        academicView.displayBestStudent(AcademicController.getBestStudentInfo());
-        
+        academicView.displayStudentBest(AcademicController.getBestStudents());
         
         input.close();
     }

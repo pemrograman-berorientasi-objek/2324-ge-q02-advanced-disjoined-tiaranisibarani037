@@ -17,7 +17,7 @@ public class AcademicController {
     private static ArrayList<Course> courses = new ArrayList<>();
     private static ArrayList<CourseOpening> courseOpenings = new ArrayList<>();
     private static ArrayList<Enrollment> enrollments = new ArrayList<>();
-    private static ArrayList<String> bestStudents = new ArrayList<>();
+    private static ArrayList<Enrollment> bestStudents = new ArrayList<>();
 
     
     public static void addLecturer(String id, String name, String initial, String email, String studyProgram) {
@@ -61,7 +61,6 @@ public class AcademicController {
             }
         }
     
-        
         // Mencari detail mata kuliah yang sesuai
         Course correspondingCourse = null;
         for (Course course : courses) {
@@ -191,8 +190,7 @@ public class AcademicController {
             }
         }
         if (bestStudentOdd != null && bestStudentEven != null) {
-            String bestStudentInfo = bestStudentOdd.getStudent_id() + "|" + bestStudentOdd.getGrade() + "/" + bestStudentEven.getGrade();
-            bestStudents.add(bestStudentInfo);
+            System.out.println(bestStudentOdd.getStudent_id() + "|" + bestStudentOdd.getGrade() + "/" + bestStudentEven.getGrade());
         }
     }
     
@@ -305,15 +303,8 @@ public class AcademicController {
         return enrollments;
     }
 
-    public static ArrayList<String> getBestStudents() {
+    public static ArrayList<Enrollment> getBestStudents() {
         return bestStudents;
-    }
-
-	public static String getBestStudentInfo() {
-        if (!bestStudents.isEmpty()) {
-            return bestStudents.get(bestStudents.size() - 1);
-        }
-        return null;
     }
 
 }
